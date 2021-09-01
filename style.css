@@ -1,0 +1,55 @@
+:root {
+    --yellow: #b58900;
+    --orange: #cb4b16;
+    --red: #dc322f;
+    --magenta: #d33682;
+    --violet: #6c71c4;
+    --blue: #268bd2;
+    --cyan: #2aa198;
+    --green: #859900;
+    --background: #fdf6e3;
+    --foreground: #002b36;
+    --selectedList: var(--blue);
+}
+
+* {
+    font-family: system-ui, sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    margin: 1rem;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
+#lists {
+    padding: 0;
+    list-style: none;
+}
+
+#lists li {
+    display: inline-block;
+}
+
+#lists li:not(:last-of-type)::after {
+    content: "·";
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    color: var(--foreground);
+}
+
+#lists li.selected {
+    color: var(--selectedList);
+    font-weight: bold;
+}
+
+#lists li a {
+    color: inherit;
+    text-decoration: none;
+}
+
+#lists li a:hover {
+    text-decoration: underline;
+}

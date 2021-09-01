@@ -4,6 +4,7 @@
         <title>todo</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <link rel="stylesheet" href="style.css">
         <script src="https://cdn.subnodal.com/lib/subelements.min.js"></script>
         <script src="auth.js"></script>
         <script src="todo.js"></script>
@@ -16,28 +17,38 @@
             <p>Please create a list</p>
         </s-if>
         <s-else>
-            <ul>
-                <s-each in="todo.getLists()" valuevar="list">
-                    <li>{{ list.name }}</li>
+            <ul id="lists">
+                <s-each in="todo.getLists()" keyvar="listId" valuevar="list">
+                    <li class="{{ list == todo.getCurrentList() ? 'selected' : '' }}">
+                        <a href="javascript:void(0);" onclick="view.selectList(this);" data-list="{{ listId }}">{{ list.name }}</a>
+                    </li>
                 </s-each>
             </ul>
         </s-else>
         <s-if condition="{{ todo.getCurrentList() instanceof todo.List }}">
             <s-each in="todo.getCurrentList().categories" keyvar="categoryId" valuevar="category">
-                <h1>{{ category.name }}</h1>
-                <ul>
-                    <s-each in="category.items" keyvar="itemId" valuevar="item">
+                <details open>
+                    <summary>
+                        <h1>{{ category.name }}</h1>
+                    </summary>
+                    <ul>
+                        <s-each in="category.items" keyvar="itemId" valuevar="item">
+                            <li>
+                                <s-if condition="{{ item.complete }}">
+                                    <input type="checkbox" checked onchange="view.markCompletion(false, this);" data-category="{{ categoryId }}" data-item="{{ itemId }}">
+                                </s-if>
+                                <s-else>
+                                    <input type="checkbox" onchange="view.markCompletion(true, this);" data-category="{{ categoryId }}" data-item="{{ itemId }}">
+                                </s-else>
+                                {{ item.message }}
+                            </li>
+                        </s-each>
                         <li>
-                            <s-if condition="{{ item.complete }}">
-                                <input type="checkbox" checked onchange="view.markCompletion(false, this);" data-category="{{ categoryId }}" data-item="{{ itemId }}">
-                            </s-if>
-                            <s-else>
-                                <input type="checkbox" onchange="view.markCompletion(true, this);" data-category="{{ categoryId }}" data-item="{{ itemId }}">
-                            </s-else>
-                            {{ item.message }}
+                            <input type="checkbox" disabled>
+                            <input placeholder="Type in a new thing to do" onkeydown="view.checkItemAddInput(event, this);" data-category="{{ categoryId }}">
                         </li>
-                    </s-each>
-                </ul>
+                    </ul>
+                </details>
             </s-each>
         </s-if>
     </body>
