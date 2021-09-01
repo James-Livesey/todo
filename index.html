@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>todo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <script src="https://cdn.subnodal.com/lib/subelements.min.js"></script>
+        <script src="auth.js"></script>
+        <script src="todo.js"></script>
+        <script src="view.js"></script>
+        <script src="script.js"></script>
+    </head>
+    <body hidden>
+        <s-if condition="{{ todo.getLists().length == 0 }}">
+            <h1>No lists yet</h1>
+            <p>Please create a list</p>
+        </s-if>
+        <s-else>
+            <ul>
+                <s-each in="todo.getLists()" valuevar="list">
+                    <li>{{ list.name }}</li>
+                </s-each>
+            </ul>
+        </s-else>
+        <s-if condition="{{ todo.getCurrentList() instanceof todo.List }}">
+            <s-each in="todo.getCurrentList().categories" keyvar="categoryId" valuevar="category">
+                <h1>{{ category.name }}</h1>
+                <ul>
+                    <s-each in="category.items" keyvar="itemId" valuevar="item">
+                        <li>
+                            <s-if condition="{{ item.complete }}">
+                                <input type="checkbox" checked onchange="view.markCompletion(false, this);" data-category="{{ categoryId }}" data-item="{{ itemId }}">
+                            </s-if>
+                            <s-else>
+                                <input type="checkbox" onchange="view.markCompletion(true, this);" data-category="{{ categoryId }}" data-item="{{ itemId }}">
+                            </s-else>
+                            {{ item.message }}
+                        </li>
+                    </s-each>
+                </ul>
+            </s-each>
+        </s-if>
+    </body>
+</html>
