@@ -10,6 +10,9 @@
     --background: #fdf6e3;
     --foreground: #002b36;
     --selectedList: var(--blue);
+    --input: #eee8d5;
+    --checkboxUnchecked: var(--input);
+    --checkboxChecked: var(--blue);
 }
 
 * {
@@ -22,6 +25,99 @@ body {
     margin: 1rem;
     margin-left: 10vw;
     margin-right: 10vw;
+}
+
+input {
+    min-height: 1rem;
+    padding: 0.2rem;
+    background-color: var(--input);
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+}
+
+input:not([checkbox]):focus {
+    outline: none;
+}
+
+input[type="checkbox"] {
+    display: inline-block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin: 0;
+    margin-block-start: 0.2rem;
+    padding: 0;
+    background-color: var(--checkboxUnchecked);
+    border-radius: 5px;
+    vertical-align: middle;
+    cursor: default!important;
+    content: "";
+    transition: 0.5s background-color;
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--checkboxChecked);
+}
+
+input[type="checkbox"]:checked::after {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: url("media/icons/checkmark.svg") no-repeat;
+    background-size: contain;
+    background-position: center;
+    content: "";
+}
+
+details.category summary {
+    list-style: none;
+}
+
+details.category summary h1 {
+    cursor: pointer;
+    transition: 0.5s opacity;
+}
+
+details.category:not([open]) summary h1 {
+    opacity: 0.5;
+}
+
+.items {
+    list-style: none;
+    padding: 0;
+}
+
+.items li {
+    display: flex;
+    align-items: center;
+}
+
+.items li .itemMessage {
+    display: inline-block;
+    flex-grow: 1;
+    margin-block-start: 0.2rem;
+    margin-inline-start: 0.5rem;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.items li .newItem {
+    display: inline-block;
+    flex-grow: 1;
+    margin: -0.2rem;
+    margin-block-start: 0;
+    margin-inline-start: 0.3rem;
+    vertical-align: middle;
+    transition: 0.5s background-color;
+}
+
+.items li .newItem:not(:focus) {
+    background-color: inherit;
 }
 
 #lists {

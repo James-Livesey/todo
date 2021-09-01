@@ -27,11 +27,11 @@
         </s-else>
         <s-if condition="{{ todo.getCurrentList() instanceof todo.List }}">
             <s-each in="todo.getCurrentList().categories" keyvar="categoryId" valuevar="category">
-                <details open>
+                <details open class="category">
                     <summary>
                         <h1>{{ category.name }}</h1>
                     </summary>
-                    <ul>
+                    <ul class="items">
                         <s-each in="category.items" keyvar="itemId" valuevar="item">
                             <li>
                                 <s-if condition="{{ item.complete }}">
@@ -40,12 +40,12 @@
                                 <s-else>
                                     <input type="checkbox" onchange="view.markCompletion(true, this);" data-category="{{ categoryId }}" data-item="{{ itemId }}">
                                 </s-else>
-                                {{ item.message }}
+                                <span class="itemMessage">{{ item.message }}</span>
                             </li>
                         </s-each>
                         <li>
                             <input type="checkbox" disabled>
-                            <input placeholder="Type in a new thing to do" onkeydown="view.checkItemAddInput(event, this);" data-category="{{ categoryId }}">
+                            <input placeholder="Type in a new thing to do" onkeydown="view.checkItemAddInput(event, this);" class="newItem" data-category="{{ categoryId }}">
                         </li>
                     </ul>
                 </details>
